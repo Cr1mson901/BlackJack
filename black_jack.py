@@ -8,6 +8,7 @@
 #add bank roll mechanic:Done
 import random
 import os
+
 #Creates a 52 deck of cards, 1 is Ace, 11-13 are face cards
 deck = {}
 face_cards = {1:'A',11:'J', 12:'Q', 13:'K'}
@@ -66,12 +67,18 @@ def play(num_decks, bank_roll):
     os.system('cls')
     if sum(deck.values()) < 30:
         build_deck(num_decks)
-    bet = int(input('Your bankroll is {}. How much would you like to bet?'.format(bank_roll)))
-
+    bet = float('inf')
+    while bet > bank_roll:
+        try:
+            bet = int(input('Your bankroll is {}. How much would you like to bet?'.format(bank_roll)))
+        except:
+            os.system('cls')
+            print('Please bet a valid number')
     player_cards = new_card(2)
     com_cards = new_card(2)
     print('Your cards: {}'.format(swap(player_cards)))
     print('Computer\'s first card: {}'.format(swap(com_cards)[0]))
+    
     #If player has black jack they win    
     if total(player_cards) == 21:
         print('Winner Winner Chicken Dinner')
@@ -86,7 +93,8 @@ def play(num_decks, bank_roll):
                 print('Dealer busted, you win')
                 bank_roll += bet
                 play(num_decks, bank_roll)
-        #compare and decide winner
+        
+        #Compare and decide winner
         print('Your final hand: {}'.format(swap(player_cards)))
         print('Computer\'s final hand: {}'.format(swap(com_cards)))
         if total(player_cards) > total(com_cards):
@@ -100,6 +108,7 @@ def play(num_decks, bank_roll):
     else:
         bank_roll -= bet      
     play(num_decks, bank_roll)
+
 #Sums the hand using 10 for face value and checking if it can use Ace as an 11 without going over
 #does not work as intended if a hand has multiple Aces ie [13, 1, 1] would give a less then inteded result. 
 #Unsure how to fix for now, maybe if that happens replace 1,1 with just a 2. But I am tired with this project
