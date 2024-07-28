@@ -71,9 +71,11 @@ def play(num_decks, bank_roll):
     while bet > bank_roll:
         try:
             bet = int(input('Your bankroll is {}. How much would you like to bet?'.format(bank_roll)))
+            if bet > bank_roll:
+                raise Exception('Not enough money')
         except:
             os.system('cls')
-            print('Please bet a valid number')
+            print('Please bet a valid amount')
     player_cards = new_card(2)
     com_cards = new_card(2)
     print('Your cards: {}'.format(swap(player_cards)))
