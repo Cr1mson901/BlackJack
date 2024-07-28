@@ -108,7 +108,10 @@ def play(num_decks, bank_roll):
         elif total(player_cards) == total(com_cards):
             print('Its a tie')
     else:
-        bank_roll -= bet      
+        bank_roll -= bet   
+    if not bank_roll:
+        print('You\'ve gone bankrupt 💸')
+        return
     play(num_decks, bank_roll)
 
 #Sums the hand using 10 for face value and checking if it can use Ace as an 11 without going over
